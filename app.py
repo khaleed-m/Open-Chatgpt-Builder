@@ -80,4 +80,4 @@ if st.session_state.is_typing:
     )
    
    st.session_state.is_typing = False
-   st.rerun()
+   st.rerun() 
