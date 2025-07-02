@@ -50,3 +50,21 @@ with st.form(key="chat_form", clear_on_submit=True):
     user_input = st.text_input("Type your message here:", key="user_input")
     submit_button = st.form_submit_button(label="Send Message" ,type="primary")
 
+col1, col2 = st.columns([1, 1])
+
+with col1:
+    clear_button = st.button("Clear Chat", key="clear_button")
+if submit_button and user_input.strip():
+    st.session_state.messages.append(
+        {
+            "role": "user",
+            "content": user_input.strip()
+        }
+    )
+    st.session_state.is_typing = True
+    st.rerun()
+
+if st.session_state.is_typing:
+    # Simulate a delay for the bot's response
+   user_message = st.session_state.messages[-1]["content"]
+   bot_response = f"Bot response to: {user_message}"
