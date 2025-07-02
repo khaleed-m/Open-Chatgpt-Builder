@@ -1,4 +1,6 @@
 #pip install streamlit  commit msg
+# streamlit run .\app.py   to run the app
+#pip install callollama
 
 import streamlit as st #user interface
 from datetime import datetime
@@ -68,4 +70,13 @@ if submit_button and user_input.strip():
 if st.session_state.is_typing:
     # Simulate a delay for the bot's response
    user_message = st.session_state.messages[-1]["content"]
-   bot_response = f"Bot response to: {user_message}"
+   bot_response =  calloLLAMA(user_message)
+   st.session_state.messages.append(
+        {
+            "role": "assistant",
+            "content": bot_response
+        }
+    )
+   
+   st.session_state.is_typing = False
+   st.rerun()
