@@ -99,3 +99,6 @@ def get_bot_response(user_message, model_name):
 #App Title and Description
 st.title(f"🤖 AI Chatbot ({st.session_state.selected_model.upper()})")
 st.markdown("*Powered by Ollama*-Multi-Model Local LLMs")
+
+#Main chat area
+st.subheader("💬 Chat")
