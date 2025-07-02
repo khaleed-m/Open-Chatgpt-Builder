@@ -96,3 +96,6 @@ def get_bot_response(user_message, model_name):
     except Exception as e:
         return f"✖️ Error: {str(e)}. Please check the server logs for more details."
     
+#App Title and Description
+st.title(f"🤖 AI Chatbot ({st.session_state.selected_model.upper()})")
+st.markdown("*Powered by Ollama*-Multi-Model Local LLMs")
