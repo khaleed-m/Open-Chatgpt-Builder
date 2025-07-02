@@ -20,7 +20,11 @@ if "messages" not in st.session_state:
             {
                 # "timestamp" : datetime.now().strftime("%Y-%m-%d %H:%M
                 "role" : "assistant",
-                "content" : "Hello! How can I assist you today?"
+                "content" : "Hello!,I am smart chartbot. How can I assist you today?"
             }
         )
     ]
+
+if "is_typing" not in st.session_state:
+    st.session_state.is_typing = False
+
