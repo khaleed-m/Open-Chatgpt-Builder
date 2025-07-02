@@ -55,3 +55,44 @@ def get_available_models():
     except:
         return []
     
+#OLLAMA INTEGRATION -   DYNAMIC MODEL SELECTION
+def get_bot_response(user_message, model_name):
+    """Function to get response from ollama running locally with selected model.
+    Make sure ollama is running and the selected model is available.""" 
+
+    try:
+        #ollama API endpoint
+        ollama_url = "http://localhost:11434/api/generate"
+
+        if model_name == 'qwen3':
+            model_name = 'qwen3-0.6b'  # Use the specific chat model for Qwen3
+        payload = {
+            "model": model_name,
+            "prompt": user_message,
+            "stream": False, #set to False to get complete response at once
+        }
+        print(payload)
+        #make request to ollama API
+        response = requests.post(
+            ollama_url,
+            headers={"Content-Type": "application/json"},
+            data=json.dumps(payload),
+            timeout=60 #60 second timeout for larger models
+        )
+
+        if response.status_code == 200:
+            result = response.json()
+            bot_response = result.get("response", "Sorry, something went wrong.")
+            return bot_response.strip()
+        else:
+            return f"Error: ollama API returned status code {response.status_code}"
+    
+    except requests.exceptions.ConnectionError:
+        return "✖️ Error: Cannot connect to ollama server. Please ensure it is running on localhost:11434"
+    
+    except requests.exceptions.Timeout:
+        return "✖️ Error: Request to ollama server timed out. Please try again later."
+    
+    except Exception as e:
+        return f"✖️ Error: {str(e)}. Please check the server logs for more details."
+    
