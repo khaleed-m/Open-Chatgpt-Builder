@@ -102,3 +102,8 @@ st.markdown("*Powered by Ollama*-Multi-Model Local LLMs")
 
 #Main chat area
 st.subheader("💬 Chat")
+
+#Display chat messages
+for message in st.session_state.messages:
+    if message["role"] == "user":
+        st.info(f"**You:** {message['content']}  \n*{message['timestamp']}*")
