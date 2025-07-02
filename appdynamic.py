@@ -106,4 +106,79 @@ st.subheader("💬 Chat")
 #Display chat messages
 for message in st.session_state.messages:
     if message["role"] == "user":
-        st.info(f"**You:** {message['content']}  \n*{message['timestamp']}*")
+        st.markdown(f"**You** ({message['timestamp']})")']})")
+        st.info(message["content"])
+    else:
+        st.markdown(f"**Bot** ({message['timestamp']})")
+        st.success(message["content"])
+
+#Show typing indicator
+if st.session_state.is_typing:
+    st.markdown("**Bot is typing...**")
+    st.warning("🤔Thinking...")
+
+#Input Section
+st.markdown("---")
+st.subheader("📝 Your Message")
+
+#Create a form for user input to handle submission properly
+with st.form(key="chat_form", clear_on_submit=True):
+    user_input = st.text_input(
+        "Type your message here:", 
+        placeholder="Enter your message...",
+        key="user_input"
+        )
+    #Form submit button
+    submit_button = st.form_submit_button(label="📤Send Message", type="primary")
+
+ #Other buttons outside the form
+col1, col2 = st.columns([1, 1])
+
+with col1:
+    clear_button = st.button("🗑️ Clear Chat", key="clear_button")
+
+with col2:
+    export_button = st.button("📥 Export Chat", key="export_button")
+
+#Handle send message
+if submit_button and user_input.strip():
+    #Add user message to chat
+    curent_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    st.session_state.messages.append(
+        {
+            "role": "user",
+            "content": user_input.strip(),
+            "timestamp": curent_time
+        }
+    )
+    #set typing indicator
+    st.session_state.is_typing = True
+    #Rerun the app to update chat
+    st.rerun()
+
+#Handle bot response
+if st.session_state.is_typing:
+    #Get bot response using selected model
+    user_message = st.session_state.messages[-1]["content"]
+    bot_response = get_bot_response(user_message, st.session_state.selected_model)
+    
+    #Add bot response to chat
+    curent_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #Check if bot response is valid
+    st.session_state.messages.append(
+        {
+            "role": "assistant",
+            "content": bot_response,
+            "timestamp": curent_time
+        }
+    )
+
+    #Reset typing indicator
+    st.session_state.is_typing = False
+    #Rerun the app to update chat
+    st.rerun()
+
+    
+
+
+   
