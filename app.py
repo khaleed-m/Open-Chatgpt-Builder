@@ -38,3 +38,9 @@ for message in st.session_state.messages:
         st.info(message["content"])
     else:
         st.success(message["content"])
+
+if st.session_state.is_typing:
+    st.markdown("**Bot is typing...**")
+    st.warning("Typing...")
+
+st.mar    
