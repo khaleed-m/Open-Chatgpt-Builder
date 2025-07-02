@@ -28,3 +28,7 @@ if "messages" not in st.session_state:
 if "is_typing" not in st.session_state:
     st.session_state.is_typing = False
 
+st.tiitle("offline LLM")
+st.markdown("This is a simple chatbot application using Streamlit and a local LLM model.")
+
+st.subheader("Chat with the bot")
