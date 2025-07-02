@@ -43,4 +43,6 @@ if st.session_state.is_typing:
     st.markdown("**Bot is typing...**")
     st.warning("Typing...")
 
-st.mar    
+st.markdown("---")
+st.subheader("Your Message")
+
