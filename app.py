@@ -4,6 +4,7 @@ import streamlit as st #user interface
 from datetime import datetime
 import requests
 import json
+from callollama import calloLLAMA
 
 # Set page configuration
 st.set_page_config(
