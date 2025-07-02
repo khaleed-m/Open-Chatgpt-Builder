@@ -23,3 +23,13 @@ if "messages" not in st.session_state:
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
     )
+
+if "is_typing" not in st.session_state:
+    st.session_state.is_typing = False
+
+if "selected_model" not in st.session_state:
+    st.session_state.selected_model = "phi3" # Default model
+
+if "available_models" not in st.session_state:
+    st.session_state.available_models = [] 
+
