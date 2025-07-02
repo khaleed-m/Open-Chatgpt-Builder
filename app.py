@@ -46,3 +46,7 @@ if st.session_state.is_typing:
 st.markdown("---")
 st.subheader("Your Message")
 
+with st.form(key="chat_form", clear_on_submit=True):
+    user_input = st.text_input("Type your message here:", key="user_input")
+    submit_button = st.form_submit_button(label="Send Message" ,type="primary")
+
