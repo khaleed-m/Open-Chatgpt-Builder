@@ -12,3 +12,15 @@ st.set_page_config(
     # layout="wide",
     # initial_sidebar_state="expanded"
 )
+
+# Function to get the current time
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        st.session_state.messages.append(
+            {
+                # "timestamp" : datetime.now().strftime("%Y-%m-%d %H:%M
+                "role" : "assistant",
+                "content" : "Hello! How can I assist you today?"
+            }
+        )
+    ]
