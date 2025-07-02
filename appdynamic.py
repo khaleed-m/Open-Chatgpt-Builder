@@ -11,3 +11,15 @@ st.set_page_config(
     layout="centered",
     # initial_sidebar_state="expanded"
 )
+
+#Initialize session state for messages and typing status
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+    #Add initial message from the assistant
+    st.session_state.messages.append(
+        {
+            "role": "assistant",
+            "content": "Hello! I'm Your AI  assistant. How can I assist you today?",
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+    )
