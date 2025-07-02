@@ -15,20 +15,26 @@ st.set_page_config(
 
 # Function to get the current time
 if "messages" not in st.session_state:
-    st.session_state.messages = [
-        st.session_state.messages.append(
+    st.session_state.messages = []
+    st.session_state.messages.append(
             {
                 # "timestamp" : datetime.now().strftime("%Y-%m-%d %H:%M
                 "role" : "assistant",
                 "content" : "Hello!,I am smart chartbot. How can I assist you today?"
             }
         )
-    ]
+
 
 if "is_typing" not in st.session_state:
     st.session_state.is_typing = False
 
-st.tiitle("offline LLM")
+st.title("offline LLM")
 st.markdown("This is a simple chatbot application using Streamlit and a local LLM model.")
 
 st.subheader("Chat with the bot")
+
+for message in st.session_state.messages:
+    if message["role"] == "user":
+        st.info(message["content"])
+    else:
+        st.success(message["content"])
