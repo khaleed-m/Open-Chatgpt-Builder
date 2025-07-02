@@ -6,7 +6,7 @@ import streamlit as st #user interface
 from datetime import datetime
 import requests
 import json
-from callollama import calloLLAMA
+from callollama import callOLLAMA
 
 # Set page configuration
 st.set_page_config(
@@ -57,6 +57,7 @@ col1, col2 = st.columns([1, 1])
 
 with col1:
     clear_button = st.button("Clear Chat", key="clear_button")
+
 if submit_button and user_input.strip():
     st.session_state.messages.append(
         {
@@ -70,7 +71,7 @@ if submit_button and user_input.strip():
 if st.session_state.is_typing:
     # Simulate a delay for the bot's response
    user_message = st.session_state.messages[-1]["content"]
-   bot_response =  calloLLAMA(user_message)
+   bot_response =  callOLLAMA(user_message)
    st.session_state.messages.append(
         {
             "role": "assistant",
