@@ -74,7 +74,7 @@ if submit_button and user_input.strip():
 if st.session_state.is_typing:
    # Call the LLM model with the user's message
 #    user_message = st.session_state.messages[-1]["content"]
-   full_user_message=st.session_state.full_user_messages   
+   full_user_message=st.session_state.full_user_message  
    bot_response =  callOLLAMA(full_user_message)
    st.session_state.messages.append(
         {
