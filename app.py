@@ -7,6 +7,7 @@ from datetime import datetime
 import requests
 import json
 from callollama import callOLLAMA
+from prompt import prompt
 
 # Set page configuration
 st.set_page_config(
@@ -65,14 +66,16 @@ if submit_button and user_input.strip():
             "content": user_input.strip()
         }
     )
-    st.session_state.messages =f""
+    #store full message with prompt
+    st.session_state.full_user_message =f"{prompt}<|>{user_input.strip()}"
     st.session_state.is_typing = True
     st.rerun()
 
 if st.session_state.is_typing:
-    # Simulate a delay for the bot's response
-   user_message = st.session_state.messages[-1]["content"]
-   bot_response =  callOLLAMA(user_message)
+   # Call the LLM model with the user's message
+#    user_message = st.session_state.messages[-1]["content"]
+   full_user_message=st.session_state.full_user_messages   
+   bot_response =  callOLLAMA(full_user_message)
    st.session_state.messages.append(
         {
             "role": "assistant",
