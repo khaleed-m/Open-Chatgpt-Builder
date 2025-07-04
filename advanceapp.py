@@ -128,3 +128,32 @@ if send_button and user_input.strip():
     # Set typing indicator
     st.session_state.is_typing = True
     st.rerun()
+# Handle bot response
+if st.session_state.is_typing:
+    # Get bot response
+    user_message = st.session_state.messages[-1]["content"]
+    bot_response = get_bot_response(user_message)
+    
+    # Add bot response to chat
+    current_time = datetime.now().strftime("%H:%M:%S")
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": bot_response,
+        "timestamp": current_time
+    })
+    
+    # Remove typing indicator
+    st.session_state.is_typing = False
+    st.rerun()
+
+# Handle clear chat
+if clear_button:
+    st.session_state.messages = []
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": "Hello! I'm your AI assistant. How can I help you today?",
+        "timestamp": datetime.now().strftime("%H:%M:%S")
+    })
+    st.session_state.is_typing = False
+    st.success("Chat cleared!")
+    st.rerun()
