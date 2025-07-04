@@ -95,3 +95,36 @@ if st.session_state.is_typing:
 # Input section
 st.markdown("---")
 st.subheader("📝 Your Message")
+
+# Create a form for input to handle submission properly
+with st.form(key="chat_form", clear_on_submit=True):
+    user_input = st.text_input(
+        "Type your message:",
+        placeholder="Ask me anything..."
+    )
+    
+    # Form submit button
+    send_button = st.form_submit_button("📤 Send Message", type="primary")
+
+# Other buttons outside the form
+col1, col2 = st.columns([1, 1])
+
+with col1:
+    clear_button = st.button("🗑️ Clear Chat")
+
+with col2:
+    export_button = st.button("💾 Export Chat")
+
+# Handle send message
+if send_button and user_input.strip():
+    # Add user message to chat
+    current_time = datetime.now().strftime("%H:%M:%S")
+    st.session_state.messages.append({
+        "role": "user",
+        "content": user_input.strip(),
+        "timestamp": current_time
+    })
+    
+    # Set typing indicator
+    st.session_state.is_typing = True
+    st.rerun()
