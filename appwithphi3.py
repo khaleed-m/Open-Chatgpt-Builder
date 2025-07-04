@@ -83,5 +83,22 @@ for message in st.session_state.messages:
         st.markdown(f"**Bot** ({message['timestamp']})")
         st.success(message["content"])
 
+# Show typing indicator
+if st.session_state.is_typing:  
+    st.markdown("**Bot** is typing...")
+    st.warning("🤖 Thinking...")
+
+# Input section
+st.markdown("---") 
+st.subheader("📝 Your Message")
+
+# Create a form for input to handle submission properly
+with st.form(key="chat_form", clear_on_submit=True):
+    user_input = st.text_input(
+        "Type your message:",
+        placeholder="Ask me anything..."
+    )
     
+    # Form submit button
+    send_button = st.form_submit_button("📤 Send Message", type="primary")
         
