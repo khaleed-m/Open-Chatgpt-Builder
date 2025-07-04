@@ -65,3 +65,23 @@ def get_bot_response(user_message):
     
     except Exception as e:
         return f"❌ Error: {str(e)}"
+    
+
+# App Title
+st.title("🤖Phi-3 Chatbot(Ollama)")
+st.markdown("*Powered by Phi-3 via Ollama*")
+
+#main chat interface
+st.subheader("💬Chat ")
+
+# Display chat messages
+for message in st.session_state.messages:
+    if message["role"] == "user":
+        st.markdown(f"**You** ({message['timestamp']})")
+        st.info(message["content"])
+    else:
+        st.markdown(f"**Bot** ({message['timestamp']})")
+        st.success(message["content"])
+
+    
+        
