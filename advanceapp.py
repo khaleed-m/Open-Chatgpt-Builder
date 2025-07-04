@@ -46,4 +46,28 @@ def get_bot_response(user_message):
         "I'm here to help! Though I'm just a placeholder for now.",
         "Got it! This will be replaced with real AI logic later."
     ]
-       
+    # Simple keyword-based responses
+    user_message_lower = user_message.lower()
+    
+    if any(word in user_message_lower for word in ["hello", "hi", "hey"]):
+        return "Hello there! Nice to meet you. I'm in demo mode!"
+    
+    elif any(word in user_message_lower for word in ["how are you", "how do you do"]):
+        return "I'm doing great, thank you! I'm a demo chatbot."
+    
+    elif any(word in user_message_lower for word in ["bye", "goodbye"]):
+        return "Goodbye! It was nice chatting with you!"
+    
+    elif any(word in user_message_lower for word in ["help", "what can you do"]):
+        return "I'm a demo chatbot with placeholder responses. You can replace my logic with real AI!"
+    
+    elif any(word in user_message_lower for word in ["time", "date"]):
+        current_time = datetime.now().strftime("%I:%M %p on %B %d, %Y")
+        return f"The current time is {current_time}"
+    
+    elif any(word in user_message_lower for word in ["weather"]):
+        return "I'd love to help with weather! Right now I'm just a demo, but you could add weather API here."
+    
+    else:
+        return random.choice(dummy_responses)
+   
