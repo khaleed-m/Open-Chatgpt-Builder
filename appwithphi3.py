@@ -141,3 +141,34 @@ if st.session_state.is_typing:
     # Reset typing indicator
     st.session_state.is_typing = False
     st.rerun()
+
+# Handle clear chat
+if clear_button:
+    st.session_state.messages = []
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": "Hello! I'm your AI assistant. How can I help you today?",
+        "timestamp": datetime.now().strftime("%H:%M:%S")
+    })
+    st.session_state.is_typing = False
+    st.success("Chat cleared!")
+    st.rerun()
+
+# Handle export chat
+if export_button:
+    if len(st.session_state.messages) > 1:  # More than just welcome message
+        chat_content = "CHATBOT CONVERSATION\n" + "="*50 + "\n\n"
+        for msg in st.session_state.messages:
+            role = "You" if msg["role"] == "user" else "Bot"
+            chat_content += f"[{msg['timestamp']}] {role}: {msg['content']}\n\n"
+        
+        st.download_button(
+            label="📄 Download Chat History",
+            data=chat_content,
+            file_name=f"chat_history_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+            mime="text/plain"
+        )
+    else:
+        st.warning("No messages to export yet!")
+
+
