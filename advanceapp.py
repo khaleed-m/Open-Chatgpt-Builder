@@ -71,3 +71,27 @@ def get_bot_response(user_message):
     else:
         return random.choice(dummy_responses)
    
+# App Title
+st.title("🤖 Simple Chatbot")
+st.markdown("*A basic chatbot built with Streamlit*")
+
+# Main chat area
+st.subheader("💬 Chat")
+
+# Display chat messages
+for message in st.session_state.messages:
+    if message["role"] == "user":
+        st.markdown(f"**You** ({message['timestamp']})")
+        st.info(message["content"])
+    else:
+        st.markdown(f"**Bot** ({message['timestamp']})")
+        st.success(message["content"])
+
+# Show typing indicator
+if st.session_state.is_typing:
+    st.markdown("**Bot** is typing...")
+    st.warning("🤖 Thinking...")
+
+# Input section
+st.markdown("---")
+st.subheader("📝 Your Message")
