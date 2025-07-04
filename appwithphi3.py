@@ -171,4 +171,54 @@ if export_button:
     else:
         st.warning("No messages to export yet!")
 
+# Sidebar with info
+with st.sidebar:
+    st.header("🤖 Ollama Status")
+    
+    # Check Ollama connection
+    try:
+        health_check = requests.get("http://localhost:11434/api/tags", timeout=5)
+        if health_check.status_code == 200:
+            st.success("✅ Ollama is running")
+            models = health_check.json().get("models", [])
+            phi3_available = any("phi3" in model.get("name", "") for model in models)
+            if phi3_available:
+                st.success("✅ Phi-3 model available")
+            else:
+                st.warning("⚠️ Phi-3 model not found")
+                st.info("Run: `ollama pull phi3`")
+        else:
+            st.error("❌ Ollama not responding")
+    except:
+        st.error("❌ Ollama not running")
+        st.info("Start Ollama: `ollama serve`")
+    
+    st.header("ℹ️ About")
+    st.write("This chatbot uses Phi-3 model running locally via Ollama.")
+    
+    st.header("📊 Stats")
+    total_messages = len(st.session_state.messages)
+    user_messages = len([m for m in st.session_state.messages if m["role"] == "user"])
+    bot_messages = len([m for m in st.session_state.messages if m["role"] == "assistant"])
+    
+    st.metric("Total Messages", total_messages)
+    st.metric("Your Messages", user_messages)
+    st.metric("Bot Messages", bot_messages)
+    
 
+    st.header("⚙️ Configuration")
+    st.write("**Model:** phi3")
+    st.write("**Endpoint:** http://localhost:11434")
+    st.write("**Timeout:** 30 seconds")
+    
+    st.header("✨ Features")
+    st.write("✅ Local AI with Phi-3")
+    st.write("✅ Real-time responses")
+    st.write("✅ Connection health check")
+    st.write("✅ Error handling")
+    st.write("✅ Export functionality")
+
+# Footer
+st.markdown("---")
+st.markdown("**Instructions:** Type a message and press Enter or click 'Send Message' to chat with Phi-3!")
+st.markdown("*Note: Make sure Ollama is running with the Phi-3 model available.*")
