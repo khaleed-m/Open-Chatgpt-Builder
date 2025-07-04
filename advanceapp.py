@@ -174,3 +174,43 @@ if export_button:
         )
     else:
         st.warning("No messages to export yet!")
+
+# Sidebar with info
+with st.sidebar:
+    st.header("ℹ️ About")
+    st.write("This is a simple chatbot demo built with Streamlit.")
+    
+    st.header("📊 Stats")
+    total_messages = len(st.session_state.messages)
+    user_messages = len([m for m in st.session_state.messages if m["role"] == "user"])
+    bot_messages = len([m for m in st.session_state.messages if m["role"] == "assistant"])
+    
+    st.metric("Total Messages", total_messages)
+    st.metric("Your Messages", user_messages)
+    st.metric("Bot Messages", bot_messages)
+    
+    st.header("🔧 For Developers")
+    st.write("To add real AI functionality:")
+    st.code("""
+def get_bot_response(user_message):
+    # Replace this function with:
+    # - OpenAI API
+    # - Hugging Face models
+    # - Your custom AI logic
+    # - Database queries
+    # - etc.
+    return your_ai_response
+    """)
+    
+    st.header("✨ Features")
+    st.write("✅ Simple chat interface")
+    st.write("✅ Message history")
+    st.write("✅ Typing indicator")
+    st.write("✅ Export functionality")
+    st.write("✅ Clear chat option")
+    st.write("✅ Easy to modify")
+
+# Footer
+st.markdown("---")
+st.markdown("**Instructions:** Type a message and click 'Send Message' to chat with the bot!")
+st.markdown("*Note: This bot currently uses dummy responses. Modify the `get_bot_response()` function to add real AI.*")
