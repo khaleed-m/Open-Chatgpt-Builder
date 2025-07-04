@@ -102,3 +102,42 @@ with st.form(key="chat_form", clear_on_submit=True):
     # Form submit button
     send_button = st.form_submit_button("📤 Send Message", type="primary")
         
+#Other buttons outside the form
+col1, col2 = st.columns([1, 1])
+with col1:
+    clear_button = st.button("🗑️ Clear Chat")
+
+with col2:
+    export_button = st.button("💾 Export Chat")
+
+# Handle send message
+if send_button and user_input.strip():
+    # Add user message to chat
+    current_time = datetime.now().strftime("%H:%M:%S")
+    st.session_state.messages.append({
+        "role": "user",
+        "content": user_input.strip(),
+        "timestamp": current_time
+    })
+    
+    # Set typing indicator
+    st.session_state.is_typing = True
+    st.rerun()
+
+# Handle bot response
+if st.session_state.is_typing:  
+    # Get bot response
+    user_message = st.session_state.messages[-1]["content"]
+    bot_response = get_bot_response(user_message)
+    
+    # Add bot response to chat
+    current_time = datetime.now().strftime("%H:%M:%S")
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": bot_response,
+        "timestamp": current_time
+    })
+    
+    # Reset typing indicator
+    st.session_state.is_typing = False
+    st.rerun()
